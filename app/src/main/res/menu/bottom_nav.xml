@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/tab_main_pager"
+        android:enabled="true"
+        android:icon="@drawable/baseline_home_white_24dp"
+        android:title="@string/home_pager"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/tab_knowledge_categories"
+        android:enabled="true"
+        android:icon="@drawable/baseline_dashboard_white_24dp"
+        android:title="@string/categories"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/tab_project"
+        android:enabled="true"
+        android:icon="@drawable/baseline_library_books_white_24dp"
+        android:title="@string/project"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/more"
+        android:enabled="true"
+        android:icon="@drawable/baseline_more_horiz_white_24dp"
+        android:title="@string/more"
+        app:showAsAction="ifRoom" />
+
+</menu>

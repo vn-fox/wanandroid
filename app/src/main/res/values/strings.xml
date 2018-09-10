@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">My Application</string>
+    <string name="home_pager">home</string>
+    <string name="categories">categories</string>
+    <string name="project">project</string>
+    <string name="more">more</string>
+    <string name="toast_message_error_occurred">出错了！</string>
+
+</resources>

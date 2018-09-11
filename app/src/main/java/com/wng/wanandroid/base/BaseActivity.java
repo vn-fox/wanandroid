@@ -9,6 +9,7 @@ import android.util.Log;
 import android.widget.Toast;
 import android.support.v7.widget.Toolbar;
 
+import com.wng.wanandroid.MainActivity;
 import com.wng.wanandroid.R;
 
 import butterknife.BindView;
@@ -20,9 +21,12 @@ public abstract class BaseActivity extends AppCompatActivity implements BaseCont
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
+        if (this instanceof MainActivity) {
+            setTheme(R.style.AppTheme);
+        }
         super.onCreate(savedInstanceState);
-        ButterKnife.bind(this);
         setContentView(getLayout());
+        ButterKnife.bind(this);
 
 
         if (toolbar != null) {

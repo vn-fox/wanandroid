@@ -11,6 +11,6 @@ public interface HomePageContract {
     }
 
     interface Presenter extends BaseContract.Presenter<HomePageContract.View> {
-        void getArticles(String category, int page);
+        void getArticles(int page);
     }
 }

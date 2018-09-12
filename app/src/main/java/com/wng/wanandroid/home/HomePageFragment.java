@@ -1,9 +1,15 @@
 package com.wng.wanandroid.home;
 
+import android.os.Handler;
+import android.support.v4.content.ContextCompat;
+import android.support.v4.widget.NestedScrollView;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
 
 import com.wng.wanandroid.R;
+import com.wng.wanandroid.adapter.HomePageAdapter;
 import com.wng.wanandroid.base.BaseFragment;
 import com.wng.wanandroid.model.ArticleDetailData;
 
@@ -16,16 +22,43 @@ public class HomePageFragment extends BaseFragment implements HomePageContract.V
     SwipeRefreshLayout refreshLayout;
     @BindView(R.id.recycler_view)
     RecyclerView recyclerView;
-
+    @BindView(R.id.nested_scroll_view)
+    NestedScrollView nestedScrollView;
+    private int currentPage;
+    private HomePageContract.Presenter presenter;
+    private LinearLayoutManager layoutManager;
+    private HomePageAdapter adapter;
 
     @Override
     public void onFragmentViewCreated() {
         super.onFragmentViewCreated();
-
-
+        Handler handler = new Handler();
+        presenter = new HomePagePresenter(this, handler);
+        refreshLayout.setColorSchemeColors(ContextCompat.getColor(getContext(), R.color.colorPrimary));
+        refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                currentPage = 0;
+                presenter.getArticles(currentPage);
+            }
+        });
+        nestedScrollView.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
+            @Override
+            public void onScrollChange(NestedScrollView nestedScrollView, int i, int i1, int i2, int i3) {
+                if (i1 == (nestedScrollView.getChildAt(0).getMeasuredHeight() - nestedScrollView.getMeasuredHeight())) {
+                    loadMore();
+                }
+            }
+        });
+        layoutManager = new LinearLayoutManager(getContext());
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setVisibility(View.VISIBLE);
 
     }
-
+    private void loadMore() {
+        currentPage+=1;
+        presenter.getArticles(currentPage);
+    }
     @Override
     public int getLayout() {
         return R.layout.fragment_home;
@@ -33,6 +66,8 @@ public class HomePageFragment extends BaseFragment implements HomePageContract.V
 
     @Override
     public void showList(List<ArticleDetailData> data, int page) {
-
+        adapter = new HomePageAdapter();
+        adapter.setData(data);
+        recyclerView.setAdapter(adapter);
     }
 }

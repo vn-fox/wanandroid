@@ -27,7 +27,9 @@ public class HomePageAdapter extends BaseRecyclerViewAdapter<ArticleDetailData, 
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder viewHolder, int i) {
-
+        if (viewHolder instanceof ItemViewHolder) {
+            ((ItemViewHolder) viewHolder).bind(data.get(i), i);
+        }
     }
 
     class ItemViewHolder extends BaseViewHolder<ArticleDetailData> {

@@ -34,6 +34,9 @@ public class HomePagePresenter extends BasePresenter<HomePageContract.View> impl
         loadData(page);
 
     }
+    public void loadDataRx(int page) {
+
+    }
 
     public void loadData(final int page) {
         OkHttpClient okHttpClient = new OkHttpClient();

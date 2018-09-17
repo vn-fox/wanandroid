@@ -7,11 +7,13 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.Toast;
 
 import com.wng.wanandroid.R;
 import com.wng.wanandroid.adapter.HomePageAdapter;
 import com.wng.wanandroid.base.BaseFragment;
 import com.wng.wanandroid.model.ArticleDetailData;
+import com.wng.wanandroid.view.SuperEasyRefreshLayout;
 
 import java.util.List;
 
@@ -19,7 +21,7 @@ import butterknife.BindView;
 
 public class HomePageFragment extends BaseFragment implements HomePageContract.View{
     @BindView(R.id.refresh_layout)
-    SwipeRefreshLayout refreshLayout;
+    SuperEasyRefreshLayout refreshLayout;
     @BindView(R.id.recycler_view)
     RecyclerView recyclerView;
     @BindView(R.id.nested_scroll_view)
@@ -35,14 +37,15 @@ public class HomePageFragment extends BaseFragment implements HomePageContract.V
         Handler handler = new Handler();
         presenter = new HomePagePresenter(this);
         presenter.getArticles(0);
-        refreshLayout.setColorSchemeColors(ContextCompat.getColor(getContext(), R.color.colorPrimary));
-        refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                currentPage = 0;
-                presenter.getArticles(currentPage);
-            }
-        });
+        initListener();
+//        refreshLayout.setColorSchemeColors(ContextCompat.getColor(getContext(), R.color.colorPrimary));
+//        refreshLayout.setOnRefreshListener(new Su.OnRefreshListener() {
+//            @Override
+//            public void onRefresh() {
+//                currentPage = 0;
+//                presenter.getArticles(currentPage);
+//            }
+//        });
         nestedScrollView.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
             @Override
             public void onScrollChange(NestedScrollView nestedScrollView, int i, int i1, int i2, int i3) {
@@ -55,6 +58,34 @@ public class HomePageFragment extends BaseFragment implements HomePageContract.V
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setVisibility(View.VISIBLE);
 
+    }
+
+    private void initListener() {
+        refreshLayout.setOnRefreshListener(new SuperEasyRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        refreshLayout.setRefreshing(false);
+                        Toast.makeText(getActivity(),"刷新 成功",Toast.LENGTH_SHORT).show();
+                    }
+                },2000);
+            }
+        });
+
+        refreshLayout.setOnLoadMoreListener(new SuperEasyRefreshLayout.OnLoadMoreListener() {
+            @Override
+            public void onLoad() {
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        refreshLayout.finishLoadMore();
+                        Toast.makeText(getActivity(),"加载更多成功",Toast.LENGTH_SHORT).show();
+                    }
+                },2000);
+            }
+        });
     }
     private void loadMore() {
         currentPage+=1;

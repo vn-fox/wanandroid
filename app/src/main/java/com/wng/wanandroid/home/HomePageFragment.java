@@ -33,7 +33,8 @@ public class HomePageFragment extends BaseFragment implements HomePageContract.V
     public void onFragmentViewCreated() {
         super.onFragmentViewCreated();
         Handler handler = new Handler();
-        presenter = new HomePagePresenter(this, handler);
+        presenter = new HomePagePresenter(this);
+        presenter.getArticles(0);
         refreshLayout.setColorSchemeColors(ContextCompat.getColor(getContext(), R.color.colorPrimary));
         refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -69,5 +70,14 @@ public class HomePageFragment extends BaseFragment implements HomePageContract.V
         adapter = new HomePageAdapter();
         adapter.setData(data);
         recyclerView.setAdapter(adapter);
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        if (presenter != null) {
+            presenter.detachView();
+            presenter = null;
+        }
     }
 }

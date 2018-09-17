@@ -34,6 +34,10 @@ public class MainActivity extends BaseActivity {
      //   setContentView(R.layout.activity_main);
         Log.d(TAG, "onCreate: " + bottomNav);
         BottomNavigationViewHelper.disableShiftMode(bottomNav);
+        HomePageFragment homePageFragment = new HomePageFragment();
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.fragment_container, homePageFragment).show(homePageFragment)
+                .commit();
         bottomNav.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {

@@ -3,70 +3,68 @@ package com.wng.wanandroid.home;
 import android.os.Handler;
 import android.util.Log;
 
-import com.google.gson.Gson;
-import com.wng.wanandroid.MainActivity;
 import com.wng.wanandroid.base.BasePresenter;
+import com.wng.wanandroid.http.RetrofitClient;
+import com.wng.wanandroid.http.RxService;
 import com.wng.wanandroid.model.ArticleDetailData;
 import com.wng.wanandroid.model.ArticlesData;
 
-import java.io.IOException;
 import java.util.List;
 
 
-import okhttp3.Call;
-import okhttp3.Callback;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Consumer;
+import io.reactivex.functions.Function;
+import io.reactivex.functions.Predicate;
+import io.reactivex.schedulers.Schedulers;
+import io.reactivex.android.schedulers.AndroidSchedulers;
 
 public class HomePagePresenter extends BasePresenter<HomePageContract.View> implements HomePageContract.Presenter{
     private static final String TAG = "HomePagePresenter";
     private HomePageContract.View view;
-    private Handler handler;
+    private Disposable disposable;
 
-    public  HomePagePresenter(HomePageContract.View view, Handler handler){
+    public  HomePagePresenter(HomePageContract.View view){
         this.view = view;
-        this.handler = handler;
+
     }
+
+    @Override
+    public void detachView() {
+        super.detachView();
+        if (disposable != null) {
+            disposable.dispose();
+        }
+    }
+
     @Override
     public void getArticles(int page) {
         Log.d(TAG, "getArticles: " + page);
-        loadData(page);
+        loadDataRx(page);
 
     }
-    public void loadDataRx(int page) {
-
-    }
-
-    public void loadData(final int page) {
-        OkHttpClient okHttpClient = new OkHttpClient();
-
-         Request request = new Request.Builder()
-                .url("http://www.wanandroid.com/article/list/" + page + "/json")
-                .build();
-
-        okHttpClient.newCall(request).enqueue(new Callback() {
-            @Override
-            public void onFailure(Call call, IOException e) {
-                Log.d(TAG, "onFailure: " + e);
-            }
-
-            @Override
-            public void onResponse(Call call, Response response) throws IOException {
-                String result = response.body().string();
-                Log.d(TAG, "onResponse: result: " + result);
-                ArticlesData articlesData = new Gson().fromJson(result, ArticlesData.class);
-                ArticlesData.Data articleData = articlesData.getData();
-                final List<ArticleDetailData> list = articleData.getDatas();
-                handler.post(new Runnable() {
+    public void loadDataRx(final int page) {
+        disposable = RetrofitClient.getInstance()
+                .create(RxService.class)
+                .getArticles(page)
+                .filter(new Predicate<ArticlesData>() {
                     @Override
-                    public void run() {
-                        view.showList(list, page);
+                    public boolean test(ArticlesData articlesData) throws Exception {
+                        return articlesData.getErrorCode() != -1;
                     }
-                });
-                //  view.showList(list, page);
+                }).map(new Function<ArticlesData, List<ArticleDetailData>>() {
+            @Override
+            public List<ArticleDetailData> apply(ArticlesData articlesData) throws Exception {
+                return articlesData.getData().getDatas();
             }
-        });
-
+        }).subscribeOn(Schedulers.io())
+          .observeOn(AndroidSchedulers.mainThread())
+          .subscribe(new Consumer<List<ArticleDetailData>>() {
+              @Override
+              public void accept(List<ArticleDetailData> articleDetailData) throws Exception {
+                  view.showList(articleDetailData, page);
+              }
+          });
     }
+
 }

@@ -6,6 +6,7 @@ import android.support.v4.widget.NestedScrollView;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -20,12 +21,13 @@ import java.util.List;
 import butterknife.BindView;
 
 public class HomePageFragment extends BaseFragment implements HomePageContract.View{
+    private static final String TAG = "HomePageFragment";
     @BindView(R.id.refresh_layout)
     SuperEasyRefreshLayout refreshLayout;
     @BindView(R.id.recycler_view)
     RecyclerView recyclerView;
-    @BindView(R.id.nested_scroll_view)
-    NestedScrollView nestedScrollView;
+//    @BindView(R.id.nested_scroll_view)
+//    NestedScrollView nestedScrollView;
     private int currentPage;
     private HomePageContract.Presenter presenter;
     private LinearLayoutManager layoutManager;
@@ -46,17 +48,20 @@ public class HomePageFragment extends BaseFragment implements HomePageContract.V
 //                presenter.getArticles(currentPage);
 //            }
 //        });
-        nestedScrollView.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
-            @Override
-            public void onScrollChange(NestedScrollView nestedScrollView, int i, int i1, int i2, int i3) {
-                if (i1 == (nestedScrollView.getChildAt(0).getMeasuredHeight() - nestedScrollView.getMeasuredHeight())) {
-                    loadMore();
-                }
-            }
-        });
+//        nestedScrollView.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
+//            @Override
+//            public void onScrollChange(NestedScrollView nestedScrollView, int i, int i1, int i2, int i3) {
+//                if (i1 == (nestedScrollView.getChildAt(0).getMeasuredHeight() - nestedScrollView.getMeasuredHeight())) {
+//                    loadMore();
+//                }
+//            }
+//        });
         layoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setVisibility(View.VISIBLE);
+
+        adapter = new HomePageAdapter();
+        recyclerView.setAdapter(adapter);
 
     }
 
@@ -68,9 +73,10 @@ public class HomePageFragment extends BaseFragment implements HomePageContract.V
                     @Override
                     public void run() {
                         refreshLayout.setRefreshing(false);
+                    //    presenter.getArticles(0);
                         Toast.makeText(getActivity(),"刷新 成功",Toast.LENGTH_SHORT).show();
                     }
-                },2000);
+                },1000);
             }
         });
 
@@ -80,10 +86,11 @@ public class HomePageFragment extends BaseFragment implements HomePageContract.V
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
+                        loadMore();
                         refreshLayout.finishLoadMore();
                         Toast.makeText(getActivity(),"加载更多成功",Toast.LENGTH_SHORT).show();
                     }
-                },2000);
+                },1000);
             }
         });
     }
@@ -98,9 +105,11 @@ public class HomePageFragment extends BaseFragment implements HomePageContract.V
 
     @Override
     public void showList(List<ArticleDetailData> data, int page) {
-        adapter = new HomePageAdapter();
-        adapter.setData(data);
-        recyclerView.setAdapter(adapter);
+        if (page == 0) {
+            adapter.setData(data);
+        } else {
+            adapter.appendItems(data);
+        }
     }
 
     @Override

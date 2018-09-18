@@ -62,6 +62,7 @@ public class HomePagePresenter extends BasePresenter<HomePageContract.View> impl
           .subscribe(new Consumer<List<ArticleDetailData>>() {
               @Override
               public void accept(List<ArticleDetailData> articleDetailData) throws Exception {
+                  Log.d(TAG, "accept: " + articleDetailData.size());
                   view.showList(articleDetailData, page);
               }
           });

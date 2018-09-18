@@ -40,7 +40,7 @@ public class SuperEasyRefreshFootView extends LinearLayout {
         textView = (TextView) view.findViewById(R.id.super_easy_refresh_text_view);
         addView(view);
         final DisplayMetrics metrics = getResources().getDisplayMetrics();
-        footViewHeight = (int) (50 * metrics.density);
+        footViewHeight = (int) (100 * metrics.density);
     }
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {

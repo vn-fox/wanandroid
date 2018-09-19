@@ -1,5 +1,6 @@
 package com.wng.wanandroid;
 
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.AppBarLayout;
@@ -9,11 +10,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Toolbar;
 
 import com.wng.wanandroid.base.BaseActivity;
 import com.wng.wanandroid.helper.BottomNavigationViewHelper;
 import com.wng.wanandroid.home.HomePageFragment;
+import com.wng.wanandroid.search.SearchActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -38,6 +41,13 @@ public class MainActivity extends BaseActivity {
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.fragment_container, homePageFragment).show(homePageFragment)
                 .commit();
+
+        toolbar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(MainActivity.this, SearchActivity.class));
+            }
+        });
         bottomNav.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {

@@ -16,7 +16,10 @@
             android:layout_height="35dp"
             android:layout_gravity="center"
             android:layout_margin="8dp"
-
+            android:background="@drawable/search_box"
+            app:navigationIcon="@drawable/ic_search_white_24dp"
+            app:title="@string/search_box_hint"
+            app:titleTextAppearance="@style/SearchToolbarTitleText"
             app:layout_scrollFlags="scroll|enterAlways"/>
     </android.support.design.widget.AppBarLayout>
 

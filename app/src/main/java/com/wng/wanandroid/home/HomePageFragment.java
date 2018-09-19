@@ -76,7 +76,7 @@ public class HomePageFragment extends BaseFragment implements HomePageContract.V
                     //    presenter.getArticles(0);
                         Toast.makeText(getActivity(),"刷新 成功",Toast.LENGTH_SHORT).show();
                     }
-                },1000);
+                },500);
             }
         });
 
@@ -90,7 +90,7 @@ public class HomePageFragment extends BaseFragment implements HomePageContract.V
                         refreshLayout.finishLoadMore();
                         Toast.makeText(getActivity(),"加载更多成功",Toast.LENGTH_SHORT).show();
                     }
-                },1000);
+                },500);
             }
         });
     }

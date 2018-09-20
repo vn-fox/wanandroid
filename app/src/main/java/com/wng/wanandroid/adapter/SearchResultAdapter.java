@@ -52,19 +52,6 @@ public class SearchResultAdapter extends
 
         @Override
         public void bind(final ArticleDetailData data, int position) {
-            String text =data.getTitle();
-//            boolean containKeyword = text.toLowerCase().contains(searchKeyword);
-//            if (containKeyword) {
-//                SpannableString spannableString = new SpannableString(text);
-//                ForegroundColorSpan span = new ForegroundColorSpan(
-//                        itemView.getContext().getResources().getColor(R.color.orange, null));
-//                int start = text.toLowerCase().indexOf(searchKeyword.toLowerCase());
-//                int end = start + searchKeyword.length();
-//                spannableString.setSpan(span, start, end, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-//                title.setText(spannableString);
-//            } else {
-//                title.setText(text.trim());
-//            }
             title.setText(data.getTitle());
             author.setText(data.getAuthor());
             date.setText(data.getNiceDate());

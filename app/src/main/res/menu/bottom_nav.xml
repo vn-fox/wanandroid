@@ -9,13 +9,13 @@
         app:showAsAction="ifRoom" />
 
     <item
-        android:id="@+id/tab_knowledge_categories"
+        android:id="@+id/knowledge_categories"
         android:enabled="true"
         android:icon="@drawable/baseline_dashboard_white_24dp"
         android:title="@string/categories"
         app:showAsAction="ifRoom" />
     <item
-        android:id="@+id/tab_project"
+        android:id="@+id/picture"
         android:enabled="true"
         android:icon="@drawable/baseline_library_books_white_24dp"
         android:title="@string/project"

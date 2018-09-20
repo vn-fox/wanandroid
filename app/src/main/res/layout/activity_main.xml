@@ -17,7 +17,7 @@
             android:layout_gravity="center"
             android:layout_margin="8dp"
             android:background="@drawable/search_box"
-            app:navigationIcon="@drawable/ic_search_white_24dp"
+            app:navigationIcon="@drawable/search"
             app:title="@string/search_tint"
             app:titleTextAppearance="@style/SearchToolbarTitleText"
             app:layout_scrollFlags="scroll|enterAlways"/>

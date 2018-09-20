@@ -1,6 +1,7 @@
 package com.wng.wanandroid.http;
 
 import com.wng.wanandroid.model.ArticlesData;
+import com.wng.wanandroid.model.CategoriesData;
 import com.wng.wanandroid.model.HotKeysData;
 
 import io.reactivex.Observable;
@@ -22,4 +23,12 @@ public interface RxService {
     //获取热搜词
     @GET("/hotkey/json")
     Observable<HotKeysData> getHotKeys();
+
+    //获取分类文章，cid指的是类别
+    @GET("article/list/{page}/json")
+    Observable<ArticlesData> getArticlesFromCatg(@Path("page") int page, @Query("cid") int cid);
+
+    //获取文章的所有分类
+    @GET("tree/json")
+    Observable<CategoriesData> getCategories();
 }

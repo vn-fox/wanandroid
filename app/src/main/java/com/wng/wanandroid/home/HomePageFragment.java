@@ -36,7 +36,6 @@ public class HomePageFragment extends BaseFragment implements HomePageContract.V
     @Override
     public void onFragmentViewCreated() {
         super.onFragmentViewCreated();
-        Handler handler = new Handler();
         presenter = new HomePagePresenter(this);
         presenter.getArticles(0);
         initListener();

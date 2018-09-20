@@ -14,6 +14,7 @@ import android.view.View;
 import android.widget.Toolbar;
 
 import com.wng.wanandroid.base.BaseActivity;
+import com.wng.wanandroid.categories.CategoriesFragment;
 import com.wng.wanandroid.helper.BottomNavigationViewHelper;
 import com.wng.wanandroid.home.HomePageFragment;
 import com.wng.wanandroid.search.SearchActivity;
@@ -55,6 +56,13 @@ public class MainActivity extends BaseActivity {
                 switch (menuItem.getItemId()) {
                     case R.id.home_page:
                         selectedFragment = new HomePageFragment();
+                        break;
+                    case R.id.knowledge_categories:
+                        selectedFragment = new CategoriesFragment();
+                        break;
+                    case R.id.picture:
+                        break;
+                    case R.id.more:
                         break;
 
                 }

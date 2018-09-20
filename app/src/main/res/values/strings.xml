@@ -5,7 +5,7 @@
     <string name="project">project</string>
     <string name="more">more</string>
     <string name="toast_message_error_occurred">出错了！</string>
-    <string name="search_box_hint">搜索</string>
+    <string name="search_tint">搜索</string>
     <string name="no_content_found">未搜到结果</string>
 
 </resources>

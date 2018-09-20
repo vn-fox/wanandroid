@@ -9,7 +9,6 @@ import java.util.List;
 
 public interface SearchContract {
     interface View extends BaseContract.View {
-        boolean isActive();
         void hideImn();
         void showEmptyView(boolean toShow);
         void showNoResult();

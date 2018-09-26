@@ -13,6 +13,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toolbar;
 
+import com.wng.wanandroid.Pictures.PicturesFragment;
 import com.wng.wanandroid.base.BaseActivity;
 import com.wng.wanandroid.categories.CategoriesFragment;
 import com.wng.wanandroid.helper.BottomNavigationViewHelper;
@@ -61,6 +62,7 @@ public class MainActivity extends BaseActivity {
                         selectedFragment = new CategoriesFragment();
                         break;
                     case R.id.picture:
+                        selectedFragment = new PicturesFragment();
                         break;
                     case R.id.more:
                         break;

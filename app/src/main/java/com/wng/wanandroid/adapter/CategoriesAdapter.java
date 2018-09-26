@@ -2,6 +2,7 @@ package com.wng.wanandroid.adapter;
 
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,6 +22,7 @@ import java.util.List;
 import butterknife.BindView;
 
 public class CategoriesAdapter extends BaseRecyclerViewAdapter<CategoryDetailData, RecyclerView.ViewHolder> {
+    private static final String TAG = "CategoriesAdapter";
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
@@ -63,6 +65,7 @@ public class CategoriesAdapter extends BaseRecyclerViewAdapter<CategoryDetailDat
                         @Override
                         public boolean onTagClick(View view, int position, FlowLayout parent) {
                     //        listener.onClick(view, position, parent ,children);
+                            Log.d(TAG, "onTagClick: ");
                             return true;
                         }
                     });

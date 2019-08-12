@@ -14,7 +14,7 @@ import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 public interface RxService {
-    String BaseUri = "http://www.wanandroid.com/";
+    String BaseUri = "https://www.wanandroid.com/";
     String BasePUri = "https://gank.io/api/data/福利/10/"; //10代表每次获取10张
     //获取主页文章列表
     @GET("article/list/{page}/json")
